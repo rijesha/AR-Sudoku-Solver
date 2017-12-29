@@ -1,13 +1,21 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:AR_Sudoku_Solver"
-             x:Class="AR_Sudoku_Solver.MainPage">
-    <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-        </StackLayout>
-    </ContentPage.Content>
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+			 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:views="clr-namespace:SkiaSharp.Views.Forms;assembly=SkiaSharp.Views.Forms"
+			 xmlns:local="clr-namespace:AR_Sudoku_Solver;assembly=AR_Sudoku_Solver"
+			 x:Class="AR_Sudoku_Solver.MainPage"
+			 Padding="0,0,0,0"
+			 Title="Main Page">
+	<ContentPage.Content>
+        <AbsoluteLayout>
+            <StackLayout AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
+                <local:CameraPreview x:Name="CameraPreview" Camera="Rear" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" />
+            </StackLayout>
+            <StackLayout x:Name="overlay" Opacity="1"  AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
+                <views:SKCanvasView x:Name="canvasview" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"  >
+                </views:SKCanvasView>
+            </StackLayout>
+        </AbsoluteLayout>
+        
+	</ContentPage.Content>
 </ContentPage>

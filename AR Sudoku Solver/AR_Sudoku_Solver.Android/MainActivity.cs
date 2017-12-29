@@ -1,6 +1,7 @@
 ﻿using System;
 
 using Android.App;
+using Android.Content;
 using Android.Content.PM;
 using Android.Runtime;
 using Android.Views;
@@ -9,19 +10,18 @@ using Android.OS;
 
 namespace AR_Sudoku_Solver.Droid
 {
-    [Activity(Label = "AR_Sudoku_Solver", Icon = "@drawable/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
-    public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
-    {
-        protected override void OnCreate(Bundle bundle)
-        {
-            TabLayoutResource = Resource.Layout.Tabbar;
-            ToolbarResource = Resource.Layout.Toolbar;
+	[Activity (Label = "AR_Sudoku_Solver.Droid", Icon = "@drawable/icon", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation,
+    ScreenOrientation = ScreenOrientation.Portrait)]
+	public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsApplicationActivity
+	{
+		protected override void OnCreate (Bundle bundle)
+		{
+			base.OnCreate (bundle);
 
-            base.OnCreate(bundle);
+			global::Xamarin.Forms.Forms.Init (this, bundle);
 
-            global::Xamarin.Forms.Forms.Init(this, bundle);
-            LoadApplication(new App());
-        }
-    }
+			LoadApplication (new App ());
+		}
+	}
 }
 
