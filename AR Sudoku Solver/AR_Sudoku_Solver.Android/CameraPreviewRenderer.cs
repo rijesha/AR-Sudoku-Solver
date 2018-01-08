@@ -92,7 +92,6 @@ namespace AR_Sudoku_Solver.Droid
             {
                 trainedKSVM[i] = (byte) stream.ReadByte();
             }
-            //var trainedKSVM = new System.IO.MemoryStream(stream).ToArray();
             sf = new SudokuFinder(trainedKSVM);
         }
 

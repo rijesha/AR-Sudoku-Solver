@@ -10,7 +10,7 @@ using Android.OS;
 
 namespace AR_Sudoku_Solver.Droid
 {
-	[Activity (Label = "AR_Sudoku_Solver.Droid", Icon = "@drawable/icon", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation,
+	[Activity (Label = "AR Sudoku Solver", Icon = "@drawable/icon", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation,
     ScreenOrientation = ScreenOrientation.Portrait)]
 	public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsApplicationActivity
 	{

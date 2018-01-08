@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace AR_Sudoku_Solver
 {
@@ -120,32 +118,6 @@ namespace AR_Sudoku_Solver
             var r = new RecursiveSudoku(detectedNumbers);
             solvedNumbers = r.SolveFully(ct);
             postRecursivePuzzle(solvedNumbers);
-
-            /*
-            int i = 0;
-            bool stopSolving = false;
-            while (!stopSolving)
-            {
-
-                i++;
-                stopSolving = iterateSolveOnce();
-                
-                if (i > 1000)
-                {
-                    stopSolving = true;
-                }
-                if (i % 50 == 0)
-                {
-                    if (checkSolve())
-                        break;
-                }
-                if (ct.IsCancellationRequested)
-                {
-                    break;
-                }
-            }
-            postparePuzzle();
-            */
         }
 
         public void postRecursivePuzzle(int[] solved)

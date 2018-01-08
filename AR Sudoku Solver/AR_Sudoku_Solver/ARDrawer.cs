@@ -1,9 +1,6 @@
 ﻿using SkiaSharp;
 using SkiaSharp.Views.Forms;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -30,10 +27,7 @@ namespace AR_Sudoku_Solver
             paint.StrokeWidth = 15;
             paint.Style = SKPaintStyle.Stroke;
             canvas.Clear();
-            if (!StaticSKInfo.bitmap.IsNull)
-            {
-                //canvas.DrawBitmap(StaticSKInfo.bitmap, 0,0);
-            }
+
             if (StaticSKInfo.drawCorners)
             {
                 var path = new SKPath();

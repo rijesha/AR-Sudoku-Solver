@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using OpenCvSharp;
-using System.Configuration;
 using Accord.Statistics.Kernels;
 using Accord.MachineLearning.VectorMachines.Learning;
 using Accord.MachineLearning.VectorMachines;
@@ -56,9 +55,6 @@ namespace AR_Sudoku_Solver.Droid
         
         public bool FindSudoku(Mat gray)
         {
-            //var ratio = image_w / 1280;
-            //var newwidth = image_h / ratio;
-
             this.gray = gray;
             Cv2.AdaptiveThreshold(gray, gray, 255, AdaptiveThresholdTypes.MeanC, ThresholdTypes.Binary, 101, 5);
             Cv2.BitwiseNot(gray, gray);
@@ -73,22 +69,11 @@ namespace AR_Sudoku_Solver.Droid
             }
 
             unwarpSudokuSquare();
-
-            Cv2.Erode(unwarpedSudoku, horzSubtract, kernelHorz);
-            Cv2.Dilate(horzSubtract, horzSubtract, kernelHorz);
-
-            Cv2.Erode(unwarpedSudoku, vertSubtract, kernelVert);
-            Cv2.Dilate(vertSubtract, vertSubtract, kernelVert);
-
-            unwarpedSudoku = unwarpedSudoku - (horzSubtract + vertSubtract);
-
             return true;
-            //Cv2.DrawContours(src, contour_list, largestContourIndex, Scalar.Green,30);
         }
 
         public List<Mat> ProcessPuzzle(Mat unwarpedPuzzle)
         {
-            /*
             Cv2.Erode(unwarpedPuzzle, horzSubtract, kernelHorz);
             Cv2.Dilate(horzSubtract, horzSubtract, kernelHorz);
 
@@ -96,7 +81,7 @@ namespace AR_Sudoku_Solver.Droid
             Cv2.Dilate(vertSubtract, vertSubtract, kernelVert);
 
             unwarpedPuzzle = unwarpedPuzzle - (horzSubtract + vertSubtract);
-            */
+            
             return getIndividualBoxes(unwarpedPuzzle);
         }
 
