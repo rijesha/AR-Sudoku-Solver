@@ -41,5 +41,10 @@ namespace AR_Sudoku_Solver
         {
             System.Diagnostics.Debug.WriteLine("Got a new Image inside dummyImagePreviewHandler and doing nothing with it");
         }
+
+        public void GotNewGrid(Sudoku s)
+        {
+
+        }
     }
 }

@@ -10,13 +10,7 @@ namespace AR_Sudoku_Solver
     public interface iImagePreviewHandler
     {
         void GotNewImageCB();
+        void GotNewGrid(Sudoku s);
     }
-
-    public interface iBufferedImage
-    {
-        IntPtr pointer { get; set; }
-        int Count { get; set; }
-
-        void DestroyBuffer();
-    }
+    
 }

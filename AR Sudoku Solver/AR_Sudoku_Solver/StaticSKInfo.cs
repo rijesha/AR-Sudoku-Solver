@@ -18,7 +18,7 @@ namespace AR_Sudoku_Solver
         public static int swidth = 100;
         public static int iheight = 100;
         public static int iwidth = 100;
-        public static int[] numbers = new int[81];
-        public static SKColor Color = SKColors.Orange;
+        public static int[] detectedNumbers = new int[81];
+        public static int[] solvedNumbers = new int[81];
     }
 }

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace AR_Sudoku_Solver
@@ -11,11 +12,6 @@ namespace AR_Sudoku_Solver
     public class ARDrawer : iImagePreviewHandler
     {
         public SKCanvasView canvasview;
-        public SKBitmap debugBitmap = new SKBitmap();
-        public bool drawOuterBox = false;
-        public SKPoint[] corners;
-        public SKPoint[] centres;
-        public int[] numbers;
         public bool newnumbers = false;
 
         public ARDrawer(SKCanvasView canvasview)
@@ -30,36 +26,49 @@ namespace AR_Sudoku_Solver
             int surfaceHeight = e.Info.Height;
             SKCanvas canvas = e.Surface.Canvas;
             SKPaint paint = new SKPaint();
-            paint.Color = Xamarin.Forms.Color.Green.ToSKColor();
+            paint.Color = SKColors.Black;
             paint.StrokeWidth = 15;
             paint.Style = SKPaintStyle.Stroke;
             canvas.Clear();
-            if (!debugBitmap.IsNull)
+            if (!StaticSKInfo.bitmap.IsNull)
             {
-                canvas.DrawBitmap(debugBitmap, 0,0);
+                //canvas.DrawBitmap(StaticSKInfo.bitmap, 0,0);
             }
-            if (drawOuterBox)
+            if (StaticSKInfo.drawCorners)
             {
                 var path = new SKPath();
-                ConvertCoordinates(corners);
-                path.AddPoly(corners);
+                ConvertCoordinates(StaticSKInfo.corners);
+                path.AddPoly(StaticSKInfo.corners);
                 canvas.DrawPath(path, paint);
-                drawOuterBox = false;
+                StaticSKInfo.drawCorners = false;
 
-                ConvertCoordinates(centres);
+                ConvertCoordinates(StaticSKInfo.centres);
                 int i = 0;
-                foreach (var c in centres)
+                foreach (var c in StaticSKInfo.centres)
                 {
                     SKPaint textPaint = new SKPaint
                     {
                         Style = SKPaintStyle.Stroke,
                         StrokeWidth = 1,
                         FakeBoldText = true,
-                        Color = StaticSKInfo.Color                        
+                        Color = SKColors.Black                     
+                    };
+
+                    SKPaint textPaint2 = new SKPaint
+                    {
+                        Style = SKPaintStyle.Stroke,
+                        StrokeWidth = 1,
+                        FakeBoldText = true,
+                        Color = SKColors.DarkGreen
                     };
 
                     textPaint.TextSize = 100f;
-                    canvas.DrawPositionedText(numbers[i] == 0 ? "" : numbers[i].ToString(), new SKPoint[] { c }, textPaint);
+                    textPaint2.TextSize = 100f;
+                    if (StaticSKInfo.solvedNumbers[i] != 0)
+                    {
+                        canvas.DrawPositionedText(StaticSKInfo.solvedNumbers[i].ToString(), new SKPoint[] { c }, textPaint2);
+                    }
+                    canvas.DrawPositionedText(StaticSKInfo.detectedNumbers[i] == 0 ? "" : StaticSKInfo.detectedNumbers[i].ToString(), new SKPoint[] { c }, textPaint);
                     i++;
                 }
             }
@@ -83,12 +92,26 @@ namespace AR_Sudoku_Solver
 
         public void GotNewImageCB()
         {
-            this.debugBitmap = StaticSKInfo.bitmap;
-            this.corners = StaticSKInfo.corners;
-            this.centres = StaticSKInfo.centres;
-            this.drawOuterBox = StaticSKInfo.drawCorners;
-            this.numbers = StaticSKInfo.numbers;
             canvasview.InvalidateSurface();
         }
+
+        private List<Sudoku> sudokuList = new List<Sudoku>();
+        CancellationTokenSource cts = new CancellationTokenSource();
+        int currentlyProcessingHash = 0;
+
+        public void GotNewGrid(Sudoku s)
+        {
+            s = s.GetSimilarSudoku(sudokuList);
+            StaticSKInfo.detectedNumbers = s.detectedNumbers;
+            if (currentlyProcessingHash != s.GetHashCode() || s.puzzleUpdated)
+            {
+                s.preparePuzzle();
+                currentlyProcessingHash = s.GetHashCode();
+                cts.Cancel();
+                cts = new CancellationTokenSource();
+                Task.Run(() => s.solvePuzzle(cts.Token));
+            }
+        }
+
     }
 }

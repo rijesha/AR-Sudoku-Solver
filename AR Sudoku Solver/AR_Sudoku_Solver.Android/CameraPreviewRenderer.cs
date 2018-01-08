@@ -131,23 +131,12 @@ namespace AR_Sudoku_Solver.Droid
                 camera.AddCallbackBuffer(buffer);           
             }
         }
-
-        bool fun = false;
+        
         private void LongImageProcessing()
         {
             runningLongProcessing = true;
             var numbers = sf.ProcessPuzzle(sf.unwarpedSudoku);
-            StaticSKInfo.numbers = sf.OCR(numbers);
-            if (!fun)
-            {
-                StaticSKInfo.Color = SKColors.Red;
-                fun = true;
-            }
-            else
-            {
-                StaticSKInfo.Color = SKColors.Blue;
-                fun = false;
-            }
+            previewHandler.GotNewGrid(sf.OCR(numbers));
             runningLongProcessing = false;
         }
     }

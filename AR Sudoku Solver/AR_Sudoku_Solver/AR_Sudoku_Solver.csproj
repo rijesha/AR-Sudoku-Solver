@@ -47,7 +47,9 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RecursiveSudoku.cs" />
     <Compile Include="StaticSKInfo.cs" />
+    <Compile Include="Sudoku.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="MainPage.xaml">

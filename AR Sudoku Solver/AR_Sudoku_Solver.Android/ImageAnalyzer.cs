@@ -303,7 +303,7 @@ namespace AR_Sudoku_Solver.Droid
             Accord.IO.Serializer.Load(kernelPath, out saveKern);
         }
 
-        public int[] OCR(List<Mat> numbers)
+        public Sudoku OCR(List<Mat> numbers)
         {
             double[][] testdata = new double[81][];
             int[] outputs = new int[81];
@@ -339,9 +339,7 @@ namespace AR_Sudoku_Solver.Droid
                 }
                 i++;
             }
-            //var a = saveKern.Decide(testdata);
-            //var b = saveKern.Probabilities(testdata);
-            //var de = saveKern.Probability(testdata);
+
             for (int j = 0; j < 81; j++)
             {
                 if (probab[j] < 0.2)
@@ -349,19 +347,7 @@ namespace AR_Sudoku_Solver.Droid
                     outputs[j] = 0;
                 }
             }
-            hashOutput(outputs);
-            return outputs;
-        }
-
-        public double hashOutput(int[] output)
-        {
-            int hash = 7;
-            for (int i = 0; i < output.Length; i++)
-            {
-                hash = hash * 3 + output[i];
-            }
-            Console.WriteLine("HASH: " + hash);
-            return hash;
+            return new Sudoku(outputs, probab);
         }
     }
 
